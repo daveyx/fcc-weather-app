@@ -38,7 +38,7 @@ class Application extends React.Component {
   }
   render() {
     var fah = Math.round( (Number(this.state.temp) * 9)/5 + 32 );
-    return <div class="col-xs-4 col-xs-offset-4">{this.state.city}, {this.state.country}, {this.state.temp}&#176;C / {fah} &#176;F</div>
+    return <div>{this.state.city}, {this.state.country}, {this.state.temp}&#176;C / {fah} &#176;F</div>
   }
 };
 

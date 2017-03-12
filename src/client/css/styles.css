@@ -1,7 +1,6 @@
 html {
   box-sizing: border-box;
 }
-
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   max-width: 42em;
@@ -18,4 +17,10 @@ h1 {
 }
 div {
 ￼  text-align: center;
+}
+footer {
+  margin-top: 30px;
+}
+footer div {
+  font-size: small;
 }
