@@ -6,7 +6,8 @@ class City extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      city: "city not set"
+      city: "",
+      country: ""
     };
   }
 
@@ -17,32 +18,32 @@ class City extends React.Component {
         city: response.data.city,
         country: response.data.country
       });
+      this.props.callbackParent(this.state.city, this.state.country)
     }).catch(function (error) {
       console.log("error axios-get1: " + error);
     });
   }
 
   render() {
-    return <div>{this.state.city}, {this.state.country}</div>
+    return <div>City Component: {this.state.city}, {this.state.country}</div>
   }
 }
 
-class Application extends React.Component {
+class Temp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      city: "city not set",
-      country: "country not set",
-      temp: "temp not set"
+      temp: ""
     };
   }
 
-  componentDidMount() {
-    this.clientInfo()
-  }
-
-  weatherInfo() {
-    axios.get("http://api.openweathermap.org/data/2.5/weather?q=" + this.state.city + "," + this.state.country + "&units=metric&APPID=3c95b8b52fbaa600c02df827c3ca246c")
+componentDidMount() {
+  let reqUri = "http://api.openweathermap.org/data/2.5/weather?q="
+            + this.props.cityProp
+            + ","
+            + this.props.countryProp
+            + "&units=metric&APPID=491b6536b887951b55f654ad8b721733";
+  axios.get(reqUri)
       .then(response => {
       this.setState({
         temp: response.data.main.temp
@@ -52,24 +53,30 @@ class Application extends React.Component {
     });
   }
 
-  clientInfo() {
-    axios.get("http://ipinfo.io")
-      .then(response => {
-      this.setState({
-        city: response.data.city,
-        country: response.data.country
-      });
-      this.weatherInfo();
-    }).catch(function (error) {
-      console.log("error axios-get1: " + error);
-    });
+  render() {
+    return <div>Temp component: city-prop: {this.props.cityProp} country-prop: {this.props.countryProp} temp-state: {this.state.temp}</div>
+  }
+}
+
+class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: "",
+      country: ""
+    };
+  }
+
+  onCityReceived(city, country) {
+    this.setState({city: city, country: country})
   }
 
   render() {
-    var fah = Math.round( (Number(this.state.temp) * 9)/5 + 32 );
     return <div>
-        <City></City>
-        <div>{this.state.temp}&#176;C / {fah} &#176;F</div>
+        <City
+          callbackParent={(city, country) => this.onCityReceived(city, country)}
+        />
+        {this.state.city !== "" && this.state.country !== "" ? <Temp cityProp={this.state.city} countryProp={this.state.country}></Temp> : null}
       </div>;
   }
 };
