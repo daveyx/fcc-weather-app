@@ -2,6 +2,9 @@ import React from 'react';
 import {render} from 'react-dom';
 import axios from 'axios';
 
+/*
+  City Component
+*/
 class City extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +32,9 @@ class City extends React.Component {
   }
 }
 
+/*
+  Temp Component
+*/
 class Temp extends React.Component {
   constructor(props) {
     super(props);
@@ -58,18 +64,23 @@ componentDidMount() {
   }
 
   render() {
+    let temp = Number(this.state.temp);
+    if (this.props.tempUnitProp === "F") {
+      temp = Math.round( (Number(this.state.temp) * 9)/5 + 32 )
+    }
     return <div>
-            <div className="temp">{this.state.temp}&#176;</div>
+            <div className="temp">{temp}&#176;{this.props.tempUnitProp}</div>
             <div className="tempDesc">{this.state.tempDesc}</div>
           </div>;
   }
 }
 
+/*
+  Icon Component
+*/
 class Icon extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
   }
 
   render() {
@@ -100,13 +111,34 @@ class Icon extends React.Component {
   }
 }
 
+/*
+  Button Component
+*/
+class Button extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  onClick() {
+    let unit = this.props.tempUnitProp === "C" ? "F" : "C";
+    this.props.tempUnitChanged(unit);
+  }
+  render() {
+    let unit = this.props.tempUnitProp === "C" ? "F" : "C";
+    return <button type="button" onClick={(e) => {this.onClick(e)}}>Show &#176;{unit}</button>
+  }
+}
+
+/*
+  Application Component
+*/
 class Application extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       city: "",
       country: "",
-      tempDesc: ""
+      tempDesc: "",
+      tempUnit: "C"
     };
   }
 
@@ -118,17 +150,23 @@ class Application extends React.Component {
     this.setState({tempDesc: tempDesc});
   }
 
+  onTempUnitChanged(tempUnit) {
+    this.setState({tempUnit: tempUnit});
+  }
+
   render() {
     return <div>
         <City
           callbackParent={(city, country) => this.onCityReceived(city, country)}
         />
       {this.state.city !== "" && this.state.country !== "" ?
-        <Temp cityProp={this.state.city} countryProp={this.state.country}
+        <Temp cityProp={this.state.city} countryProp={this.state.country} tempUnitProp={this.state.tempUnit}
           callbackParent={(tempId) => this.onTempReceived(tempId)}>
         </Temp> : null}
       {this.state.tempDesc !== "" ?
-        <Icon tempDescProp={this.state.tempDesc}></Icon> : null}
+        <div>
+        <Icon tempDescProp={this.state.tempDesc}></Icon>
+        <Button tempUnitProp={this.state.tempUnit} tempUnitChanged={(tempUnit) => this.onTempUnitChanged(tempUnit)} /></div> : null}
       </div>;
   }
 };
