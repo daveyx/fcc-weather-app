@@ -59,7 +59,7 @@ componentDidMount() {
 
   render() {
     return <div>
-            <div className="temp">{this.state.temp}</div>
+            <div className="temp">{this.state.temp}&#176;</div>
             <div className="tempDesc">{this.state.tempDesc}</div>
           </div>;
   }
