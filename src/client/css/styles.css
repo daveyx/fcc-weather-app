@@ -1,12 +1,17 @@
 html {
   box-sizing: border-box;
+  background-color: #46b8da;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  max-width: 42em;
+  max-width: 30em;
   padding: 2em;
   margin: 0 auto;
   text-align: center;
+  background-color: #FFF;
+  border-radius: 5px;
 }
 h1 {
   margin-bottom: 0;
@@ -17,6 +22,15 @@ h1 {
 }
 div {
 ￼  text-align: center;
+}
+.city {
+  font-size: 2.5em;
+}
+.temp {
+  font-size: 4.5em;
+}
+.icon {
+  font-size: 7em;
 }
 footer {
   margin-top: 30px;

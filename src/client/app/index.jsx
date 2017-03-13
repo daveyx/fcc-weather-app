@@ -25,7 +25,7 @@ class City extends React.Component {
   }
 
   render() {
-    return <div>{this.state.city}, {this.state.country}</div>
+    return <div className="city">{this.state.city}, {this.state.country}</div>
   }
 }
 
@@ -59,8 +59,8 @@ componentDidMount() {
 
   render() {
     return <div>
-            <div>{this.state.temp}</div>
-            <div>{this.state.tempDesc}</div>
+            <div className="temp">{this.state.temp}</div>
+            <div className="tempDesc">{this.state.tempDesc}</div>
           </div>;
   }
 }
@@ -96,9 +96,7 @@ class Icon extends React.Component {
         break;
       default:
     }
-    return <div>
-        <div><i className={`wi wi-${className}`}></i></div>
-      </div>;
+    return <div className="icon"><i className={`wi wi-${className}`}></i></div>;
   }
 }
 
