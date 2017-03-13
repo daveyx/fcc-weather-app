@@ -20,3 +20,8 @@ http://daveyx.ga/weatherapp/
 http://codepen.io/daveyx/full/gmWPdM/
 
 ###install
+1. git clone https://github.com/daveyx/fcc-weather-app.git
+2. cd fcc-weather-app
+3. npm install
+4. call src/client/index.html in your browser
+5. enjoy...
