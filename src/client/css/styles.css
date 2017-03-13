@@ -32,8 +32,17 @@ div {
 .icon {
   font-size: 7em;
 }
+button {
+  color: #ccc;
+  background-color: #fff;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 footer {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 footer div {
   font-size: small;
