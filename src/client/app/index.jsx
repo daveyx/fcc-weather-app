@@ -25,7 +25,7 @@ class City extends React.Component {
   }
 
   render() {
-    return <div>City Component: {this.state.city}, {this.state.country}</div>
+    return <div>{this.state.city}, {this.state.country}</div>
   }
 }
 
@@ -33,7 +33,8 @@ class Temp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      temp: ""
+      temp: "",
+      tempDesc: ""
     };
   }
 
@@ -43,18 +44,61 @@ componentDidMount() {
             + ","
             + this.props.countryProp
             + "&units=metric&APPID=491b6536b887951b55f654ad8b721733";
+  //console.log(reqUri);
   axios.get(reqUri)
       .then(response => {
       this.setState({
-        temp: response.data.main.temp
+        temp: response.data.main.temp,
+        tempDesc: response.data.weather[0].main
       });
+      this.props.callbackParent(this.state.tempDesc);
     }).catch(function (error) {
       console.log("error axios-get2: " + error);
     });
   }
 
   render() {
-    return <div>Temp component: city-prop: {this.props.cityProp} country-prop: {this.props.countryProp} temp-state: {this.state.temp}</div>
+    return <div>
+            <div>{this.state.temp}</div>
+            <div>{this.state.tempDesc}</div>
+          </div>;
+  }
+}
+
+class Icon extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  render() {
+    let desc = this.props.tempDescProp.toLowerCase();
+    let className = "";
+    switch (desc) {
+      case 'drizzle':
+        className= "showers";
+        break;
+      case 'clouds':
+        className= "cloudy";
+        break;
+      case 'rain':
+        className= "rain";
+        break;
+      case 'snow':
+        className= "snow";
+        break;
+      case 'clear':
+        className= "day-sunny";
+        break;
+      case 'thunderstom':
+        className= "thunderstorm";
+        break;
+      default:
+    }
+    return <div>
+        <div><i className={`wi wi-${className}`}></i></div>
+      </div>;
   }
 }
 
@@ -63,7 +107,8 @@ class Application extends React.Component {
     super(props);
     this.state = {
       city: "",
-      country: ""
+      country: "",
+      tempDesc: ""
     };
   }
 
@@ -71,12 +116,21 @@ class Application extends React.Component {
     this.setState({city: city, country: country})
   }
 
+  onTempReceived(tempDesc) {
+    this.setState({tempDesc: tempDesc});
+  }
+
   render() {
     return <div>
         <City
           callbackParent={(city, country) => this.onCityReceived(city, country)}
         />
-        {this.state.city !== "" && this.state.country !== "" ? <Temp cityProp={this.state.city} countryProp={this.state.country}></Temp> : null}
+      {this.state.city !== "" && this.state.country !== "" ?
+        <Temp cityProp={this.state.city} countryProp={this.state.country}
+          callbackParent={(tempId) => this.onTempReceived(tempId)}>
+        </Temp> : null}
+      {this.state.tempDesc !== "" ?
+        <Icon tempDescProp={this.state.tempDesc}></Icon> : null}
       </div>;
   }
 };
