@@ -7,19 +7,19 @@
     (________/  (___/    \___)     \__/      \_______) |___/      |___/\___|
     ------------------------------------------------------------------------
 
-#my weather app with react#
+# my weather app with react
 https://www.freecodecamp.com/challenges/show-the-local-weather
 
-###based on
+### based on
 https://www.codementor.io/tamizhvendan/beginner-guide-setup-reactjs-environment-npm-babel-6-webpack-du107r9zr
 
-###live demo
+### live demo
 http://daveyx.ga/weatherapp/
 
-###view at codepen
+### view at codepen
 http://codepen.io/daveyx/full/gmWPdM/
 
-###install
+### install
 1. git clone https://github.com/daveyx/fcc-weather-app.git
 2. cd fcc-weather-app
 3. npm install
