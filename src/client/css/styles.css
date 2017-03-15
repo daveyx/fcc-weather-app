@@ -12,6 +12,7 @@ body {
   text-align: center;
   background-color: #FFF;
   border-radius: 5px;
+  box-shadow: 10px 10px 50px grey;
 }
 h1 {
   margin-bottom: 0;

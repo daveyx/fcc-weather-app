@@ -21,6 +21,7 @@ class City extends React.Component {
         city: response.data.city,
         country: response.data.country
       });
+      console.log(this.state.city + " - " + this.state.country);
       this.props.callbackParent(this.state.city, this.state.country)
     }).catch(function (error) {
       console.log("error axios-get1: " + error);
@@ -28,7 +29,20 @@ class City extends React.Component {
   }
 
   render() {
-    return <div className="city">{this.state.city}, {this.state.country}</div>
+    if (this.state.city && this.state.country) {
+      return <div className="city">{this.state.city}, {this.state.country}</div>
+    } else {
+      return  <div>
+                <div className="city">
+                  Sorry! Your location can not detected by this app.
+                </div>
+                <div>
+                  This app uses ipinfo.io for detect the location<br /><br />
+                  Maybe this app will support a manual weather search in the future.<br />
+                  Please check back later.
+                </div>
+              </div>
+    }
   }
 }
 
